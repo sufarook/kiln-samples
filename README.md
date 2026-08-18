@@ -15,10 +15,18 @@ What you see here is what your own project looks like.
 
 ## Samples
 
-| Module | What it shows |
+Each sample is a self-contained folder under [`samples/`](samples) with its own README.
+
+| Sample | What it shows |
 |---|---|
-| [`composeApp`](composeApp) | **Compose Multiplatform** — one `@Composable` and one set of generated repositories shared by Android and iOS. Includes a **many-to-many junction table** using a composite primary key. |
-| [`sample-android`](sample-android) | Plain Android app with XML views and a `RecyclerView` — Kiln in a traditional, non-Compose codebase. |
+| [**`compose-multiplatform`**](samples/compose-multiplatform) | One `@Composable` and one set of generated repositories shared by **Android and iOS**. Centres on a **many-to-many junction table** with a composite primary key. |
+| [**`android-views`**](samples/android-views) | The same library in a traditional **XML / RecyclerView** Android app — for codebases not on Compose. |
+
+```sh
+./gradlew :compose-multiplatform:installDebug   # Compose, Android
+./gradlew :android-views:installDebug           # Views, Android
+./gradlew :compose-multiplatform:linkDebugFrameworkIosSimulatorArm64   # iOS
+```
 
 ## The whole setup
 
@@ -32,9 +40,7 @@ That one line applies KSP, wires the processor, and adds the `annotations` +
 `runtime` dependencies. You still choose a SQLite driver for your platform —
 Kiln doesn't bundle one.
 
-## What the Compose sample demonstrates
-
-Three data classes are the entire schema ([`Entities.kt`](composeApp/src/commonMain/kotlin/io/github/sufarook/kiln/sample/compose/Entities.kt)):
+## Highlight: a junction table from three data classes
 
 ```kotlin
 @DbEntity(tableName = "tasks")
@@ -50,8 +56,8 @@ data class Tag(
     val name: String
 )
 
-// A junction table: both columns are part of the composite primary key
-// *and* foreign keys — which is exactly what a join table is.
+// Both columns are part of the composite primary key *and* foreign keys —
+// which is exactly what a join table is.
 @DbEntity(tableName = "task_tags")
 data class TaskTag(
     @PrimaryKey @Relation val taskId: Long,
@@ -59,47 +65,10 @@ data class TaskTag(
 )
 ```
 
-From `TaskTag` alone, Kiln generates:
-
-```kotlin
-TaskTagKey(taskId, tagId)          // composite key type, used by findById / delete
-taskTags.findByTask(taskId)        // every tag on a task
-taskTags.findByTag(tagId)          // every task with a tag
-taskTags.observeByTask(taskId)     // ...and reactive variants
-taskTags.deleteByTask(taskId)      // one-call cascade cleanup
-```
-
-and this SQL — note the correct table-level composite constraint:
-
-```sql
-CREATE TABLE IF NOT EXISTS "task_tags" (
-    "task_id" INTEGER NOT NULL,
-    "tag_id" INTEGER NOT NULL,
-    PRIMARY KEY ("task_id", "tag_id")
-)
-```
-
-Also shown: `observeAll()` driving Compose state reactively, `createTable()`
-auto-migration on every launch, and CRUD through generated repositories.
-
-## Running
-
-**Android** (either module):
-
-```sh
-./gradlew :composeApp:installDebug
-./gradlew :sample-android:installDebug
-```
-
-**iOS** — see [`iosApp/README.md`](iosApp/README.md). The Xcode project isn't
-checked in; the Kotlin side compiles without Xcode:
-
-```sh
-./gradlew :composeApp:linkDebugFrameworkIosSimulatorArm64
-```
-
-> Compose Multiplatform 1.11+ no longer publishes an `iosX64` artifact, so the
-> iOS targets here are Apple Silicon only (`iosArm64`, `iosSimulatorArm64`).
+From `TaskTag` alone, Kiln generates `TaskTagKey(taskId, tagId)`,
+`findByTask` / `findByTag`, their `observeBy…` variants, and
+`deleteByTask` / `deleteByTag` — plus the correct table-level
+`PRIMARY KEY ("task_id", "tag_id")` constraint.
 
 ## Requirements
 
@@ -118,7 +87,7 @@ checked in; the Kotlin side compiles without Xcode:
 locally-built Kiln:
 
 ```sh
-cd ../Kiln && ./gradlew publishToMavenLocal    # then set `kiln` in gradle/libs.versions.toml
+cd ../Kiln && ./gradlew publishToMavenLocal    # then bump `kiln` in gradle/libs.versions.toml
 ```
 
 ## License

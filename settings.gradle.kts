@@ -20,5 +20,11 @@ dependencyResolutionManagement {
 
 rootProject.name = "kiln-samples"
 
-include(":sample-android")
-include(":composeApp")
+// Each sample lives in its own self-contained folder under samples/.
+// projectDir is set explicitly so the task paths stay short — you run
+// `:compose-multiplatform:assembleDebug`, not `:samples:compose-multiplatform:...`.
+include(":android-views")
+project(":android-views").projectDir = file("samples/android-views")
+
+include(":compose-multiplatform")
+project(":compose-multiplatform").projectDir = file("samples/compose-multiplatform")
