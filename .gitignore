@@ -1,0 +1,22 @@
+# Gradle
+.gradle/
+build/
+.kotlin/
+local.properties
+*.hprof
+
+# IDE
+.idea/
+*.iml
+captures/
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Xcode / KMP iOS
+xcuserdata/
+*.xcworkspace/xcuserdata/
+DerivedData/
+.swiftpm/
+Pods/
