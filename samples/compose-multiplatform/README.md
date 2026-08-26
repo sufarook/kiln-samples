@@ -67,3 +67,17 @@ CREATE TABLE IF NOT EXISTS "task_tags" (
 
 Also demonstrated: `observeAll()` driving Compose state via `collectAsState`,
 auto-migration on launch, and CRUD through generated repositories.
+
+## One-call schema setup
+
+With three entities in this module, [`TaskStore`](src/commonMain/kotlin/io/github/sufarook/kiln/sample/compose/TaskStore.kt)
+skips per-repository `createTable()` calls in favor of the generated `KilnSchema`
+object, which covers every `@DbEntity` Kiln sees in `commonMain`:
+
+```kotlin
+init {
+    KilnSchema.createAll(driver) // creates + auto-migrates Task, Tag, and TaskTag
+}
+```
+
+Adding a fourth entity later needs no change to this line.

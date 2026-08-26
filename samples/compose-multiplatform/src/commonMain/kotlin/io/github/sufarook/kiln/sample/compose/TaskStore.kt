@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 /**
  * All persistence for the sample. Every repository here is generated — the only
- * hand-written database code in this file is `createTable()` and the calls below.
+ * hand-written database code in this file is `KilnSchema.createAll` and the calls below.
  */
 class TaskStore(driver: SqlDriver) {
 
@@ -14,11 +14,9 @@ class TaskStore(driver: SqlDriver) {
     private val taskTags = TaskTagRepository(driver)
 
     init {
-        // Safe on every launch: creates the table if missing, and auto-migrates
-        // the schema if the data class changed since last run.
-        tasks.createTable()
-        tags.createTable()
-        taskTags.createTable()
+        // One call for every @DbEntity in this module — safe on every launch,
+        // and adding a fourth entity later needs no change here.
+        KilnSchema.createAll(driver)
     }
 
     // ── Reactive reads — re-emit after every write to that table ──────────────
