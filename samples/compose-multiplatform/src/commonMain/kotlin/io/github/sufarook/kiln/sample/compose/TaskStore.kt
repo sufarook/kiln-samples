@@ -1,13 +1,14 @@
 package io.github.sufarook.kiln.sample.compose
 
 import app.cash.sqldelight.db.SqlDriver
+import io.github.sufarook.kiln.runtime.withTransaction
 import kotlinx.coroutines.flow.Flow
 
 /**
  * All persistence for the sample. Every repository here is generated — the only
  * hand-written database code in this file is `KilnSchema.createAll` and the calls below.
  */
-class TaskStore(driver: SqlDriver) {
+class TaskStore(private val driver: SqlDriver) {
 
     private val tasks = TaskRepository(driver)
     private val tags = TagRepository(driver)
@@ -34,13 +35,14 @@ class TaskStore(driver: SqlDriver) {
     suspend fun toggleDone(task: Task) = tasks.update(task.copy(isDone = !task.isDone))
 
     /**
-     * Kiln doesn't enable SQLite foreign-key enforcement, so the join rows are
-     * removed explicitly. `deleteByTask` is generated from `@Relation` on
-     * TaskTag.taskId — that's the whole cascade, one call.
+     * Wrapping the two deletes in a transaction makes them atomic: either both
+     * happen or neither does, and observers see one update instead of two.
      */
     suspend fun deleteTask(task: Task) {
-        taskTags.deleteByTask(task.id)
-        tasks.delete(task.id)
+        driver.withTransaction {
+            taskTags.deleteByTask(task.id)
+            tasks.delete(task.id)
+        }
     }
 
     // ── Tags & assignment (the junction table in action) ──────────────────────
@@ -59,7 +61,9 @@ class TaskStore(driver: SqlDriver) {
     /** Seeds a few tags the first time the app runs. */
     suspend fun seedTagsIfEmpty() {
         if (tags.count() == 0L) {
-            listOf("home", "work", "urgent").forEach { addTag(it) }
+            driver.withTransaction {
+                listOf("home", "work", "urgent").forEach { addTag(it) }
+            }
         }
     }
 }
