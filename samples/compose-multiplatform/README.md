@@ -1,8 +1,8 @@
 # Compose Multiplatform sample
 
-One `@Composable` and one set of generated repositories, shared by **Android and
-iOS**. This is the sample that shows Kiln's headline claim: entities defined once
-in `commonMain`, repositories generated once, used on every target.
+One `@Composable` and one set of generated repositories, shared by **Android,
+Desktop (JVM), and iOS**. Entities defined once in `commonMain`, repositories
+generated once, used on every target.
 
 ## Run
 
@@ -12,8 +12,14 @@ in `commonMain`, repositories generated once, used on every target.
 ./gradlew :compose-multiplatform:installDebug
 ```
 
-**iOS** — see [`iosApp/README.md`](iosApp/README.md). The Kotlin side compiles
-without Xcode:
+**Desktop (JVM)** — runs on Windows, macOS, and Linux:
+
+```sh
+./gradlew :compose-multiplatform:run
+```
+
+**iOS** (macOS only) — see [`iosApp/README.md`](iosApp/README.md). The Kotlin
+side compiles without Xcode:
 
 ```sh
 ./gradlew :compose-multiplatform:linkDebugFrameworkIosSimulatorArm64
@@ -27,6 +33,7 @@ without Xcode:
 ```
 src/commonMain/   Entities, TaskStore, and the shared Compose UI (App.kt)
 src/androidMain/  MainActivity — creates the Android driver, calls setContent { App() }
+src/desktopMain/  Main.kt — creates the JVM driver, opens a Compose window
 src/iosMain/      MainViewController — creates the iOS driver, returns a UIViewController
 iosApp/           Swift entry point that hosts the Compose UI
 ```
