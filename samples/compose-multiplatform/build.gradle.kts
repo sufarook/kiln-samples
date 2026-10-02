@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.kotlin.compose.compiler)
     // Kiln runs the processor once over commonMain, so one generated repository
-    // is shared by every target — Android and iOS both use the same code.
+    // is shared by every target — Android, Desktop, and iOS all use the same code.
     alias(libs.plugins.kiln)
 }
 
@@ -13,12 +13,16 @@ kotlin {
 
     androidTarget()
 
-    // Compose Multiplatform 1.11+ no longer publishes an iosX64 (Intel simulator)
-    // artifact, so only the Apple Silicon targets are declared here.
-    listOf(iosArm64(), iosSimulatorArm64()).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "ComposeApp"
-            isStatic = true
+    // Desktop (JVM) target — runs on Windows, macOS, and Linux.
+    jvm("desktop")
+
+    // iOS targets require macOS for Kotlin/Native compilation.
+    if (System.getProperty("os.name") == "Mac OS X") {
+        listOf(iosArm64(), iosSimulatorArm64()).forEach { iosTarget ->
+            iosTarget.binaries.framework {
+                baseName = "ComposeApp"
+                isStatic = true
+            }
         }
     }
 
@@ -36,6 +40,16 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
         }
+        val desktopMain by getting
+        desktopMain.dependencies {
+            implementation(compose.desktop.currentOs)
+        }
+    }
+}
+
+compose.desktop {
+    application {
+        mainClass = "io.github.sufarook.kiln.sample.compose.MainKt"
     }
 }
 
