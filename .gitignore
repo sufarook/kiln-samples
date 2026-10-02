@@ -20,3 +20,8 @@ xcuserdata/
 DerivedData/
 .swiftpm/
 Pods/
+
+# SQLite runtime databases
+*.db
+*.db-shm
+*.db-wal

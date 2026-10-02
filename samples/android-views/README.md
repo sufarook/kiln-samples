@@ -36,8 +36,8 @@ The only Kiln-specific line in [`build.gradle.kts`](build.gradle.kts):
 
 ```kotlin
 plugins {
-    id("io.github.sufarook.kiln") version "1.0.0-alpha06"
+    id("io.github.sufarook.kiln") version "1.0.0-alpha08"
 }
 ```
 
-Plus a SQLite driver of your choosing — here `app.cash.sqldelight:android-driver`.
+Kiln bundles its own SQLite driver — no extra dependency needed.

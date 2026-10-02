@@ -37,7 +37,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 
-/** Shared UI — this exact composable runs on both Android and iOS. */
+/** Shared UI — this exact composable runs on Android, Desktop, and iOS. */
 @Composable
 fun App(store: TaskStore) {
     MaterialTheme {

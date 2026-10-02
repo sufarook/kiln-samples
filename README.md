@@ -21,10 +21,12 @@ Each sample is a self-contained folder under [`samples/`](samples) with its own 
 |---|---|
 | [**`compose-multiplatform`**](samples/compose-multiplatform) | One `@Composable` and one set of generated repositories shared by **Android and iOS**. Centres on a **many-to-many junction table** with a composite primary key. |
 | [**`android-views`**](samples/android-views) | The same library in a traditional **XML / RecyclerView** Android app — for codebases not on Compose. |
+| [**`expense-tracker`**](samples/expense-tracker) | A real-world **multi-table** expense tracker: one-to-many (`@Relation`), many-to-many (junction table with composite PK), transactions, type-safe DSL queries, and reactive filtering. |
 
 ```sh
 ./gradlew :compose-multiplatform:installDebug   # Compose, Android
 ./gradlew :android-views:installDebug           # Views, Android
+./gradlew :expense-tracker:installDebug         # Multi-table, Android
 ./gradlew :compose-multiplatform:linkDebugFrameworkIosSimulatorArm64   # iOS
 ```
 
@@ -32,13 +34,12 @@ Each sample is a self-contained folder under [`samples/`](samples) with its own 
 
 ```kotlin
 plugins {
-    id("io.github.sufarook.kiln") version "1.0.0-alpha06"
+    id("io.github.sufarook.kiln") version "1.0.0-alpha08"
 }
 ```
 
 That one line applies KSP, wires the processor, and adds the `annotations` +
-`runtime` dependencies. You still choose a SQLite driver for your platform —
-Kiln doesn't bundle one.
+`runtime` dependencies. Kiln bundles its own SQLite driver — no extra dependency needed.
 
 ## Highlight: a junction table from three data classes
 
@@ -74,7 +75,7 @@ From `TaskTag` alone, Kiln generates `TaskTagKey(taskId, tagId)`,
 
 | | |
 |---|---|
-| Kiln | 1.0.0-alpha06 |
+| Kiln | 1.0.0-alpha08 |
 | Kotlin | 2.3.20 |
 | Compose Multiplatform | 1.11.1 |
 | AGP | 8.11.2 |
