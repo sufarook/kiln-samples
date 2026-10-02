@@ -34,7 +34,7 @@ Each sample is a self-contained folder under [`samples/`](samples) with its own 
 
 ```kotlin
 plugins {
-    id("io.github.sufarook.kiln") version "1.0.0-alpha07"
+    id("io.github.sufarook.kiln") version "1.0.0-alpha08"
 }
 ```
 
@@ -75,7 +75,7 @@ From `TaskTag` alone, Kiln generates `TaskTagKey(taskId, tagId)`,
 
 | | |
 |---|---|
-| Kiln | 1.0.0-alpha07 |
+| Kiln | 1.0.0-alpha08 |
 | Kotlin | 2.3.20 |
 | Compose Multiplatform | 1.11.1 |
 | AGP | 8.11.2 |

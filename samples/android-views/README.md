@@ -36,7 +36,7 @@ The only Kiln-specific line in [`build.gradle.kts`](build.gradle.kts):
 
 ```kotlin
 plugins {
-    id("io.github.sufarook.kiln") version "1.0.0-alpha07"
+    id("io.github.sufarook.kiln") version "1.0.0-alpha08"
 }
 ```
 
