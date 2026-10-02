@@ -21,10 +21,12 @@ Each sample is a self-contained folder under [`samples/`](samples) with its own 
 |---|---|
 | [**`compose-multiplatform`**](samples/compose-multiplatform) | One `@Composable` and one set of generated repositories shared by **Android and iOS**. Centres on a **many-to-many junction table** with a composite primary key. |
 | [**`android-views`**](samples/android-views) | The same library in a traditional **XML / RecyclerView** Android app — for codebases not on Compose. |
+| [**`expense-tracker`**](samples/expense-tracker) | A real-world **multi-table** expense tracker: one-to-many (`@Relation`), many-to-many (junction table with composite PK), transactions, type-safe DSL queries, and reactive filtering. |
 
 ```sh
 ./gradlew :compose-multiplatform:installDebug   # Compose, Android
 ./gradlew :android-views:installDebug           # Views, Android
+./gradlew :expense-tracker:installDebug         # Multi-table, Android
 ./gradlew :compose-multiplatform:linkDebugFrameworkIosSimulatorArm64   # iOS
 ```
 

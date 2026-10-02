@@ -28,3 +28,6 @@ project(":android-views").projectDir = file("samples/android-views")
 
 include(":compose-multiplatform")
 project(":compose-multiplatform").projectDir = file("samples/compose-multiplatform")
+
+include(":expense-tracker")
+project(":expense-tracker").projectDir = file("samples/expense-tracker")
