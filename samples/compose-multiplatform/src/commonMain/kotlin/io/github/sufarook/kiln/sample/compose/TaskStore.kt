@@ -1,6 +1,6 @@
 package io.github.sufarook.kiln.sample.compose
 
-import app.cash.sqldelight.db.SqlDriver
+import io.github.sufarook.kiln.runtime.KilnDriver
 import io.github.sufarook.kiln.runtime.withTransaction
 import kotlinx.coroutines.flow.Flow
 
@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
  * All persistence for the sample. Every repository here is generated — the only
  * hand-written database code in this file is `KilnSchema.createAll` and the calls below.
  */
-class TaskStore(private val driver: SqlDriver) {
+class TaskStore(private val driver: KilnDriver) {
 
     private val tasks = TaskRepository(driver)
     private val tags = TagRepository(driver)

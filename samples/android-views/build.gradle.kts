@@ -27,9 +27,6 @@ android {
 }
 
 dependencies {
-    // Kiln does not bundle a SQLite driver — you choose one per platform.
-    implementation(libs.sqldelight.android.driver)
-
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.lifecycle.runtime.ktx)

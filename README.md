@@ -32,13 +32,12 @@ Each sample is a self-contained folder under [`samples/`](samples) with its own 
 
 ```kotlin
 plugins {
-    id("io.github.sufarook.kiln") version "1.0.0-alpha06"
+    id("io.github.sufarook.kiln") version "1.0.0-alpha07"
 }
 ```
 
 That one line applies KSP, wires the processor, and adds the `annotations` +
-`runtime` dependencies. You still choose a SQLite driver for your platform —
-Kiln doesn't bundle one.
+`runtime` dependencies. Kiln bundles its own SQLite driver — no extra dependency needed.
 
 ## Highlight: a junction table from three data classes
 
@@ -74,7 +73,7 @@ From `TaskTag` alone, Kiln generates `TaskTagKey(taskId, tagId)`,
 
 | | |
 |---|---|
-| Kiln | 1.0.0-alpha06 |
+| Kiln | 1.0.0-alpha07 |
 | Kotlin | 2.3.20 |
 | Compose Multiplatform | 1.11.1 |
 | AGP | 8.11.2 |
