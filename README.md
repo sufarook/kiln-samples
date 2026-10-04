@@ -22,12 +22,14 @@ Each sample is a self-contained folder under [`samples/`](samples) with its own 
 | [**`compose-multiplatform`**](samples/compose-multiplatform) | One `@Composable` and one set of generated repositories shared by **Android, Desktop (JVM), and iOS**. Centres on a **many-to-many junction table** with a composite primary key. |
 | [**`android-views`**](samples/android-views) | The same library in a traditional **XML / RecyclerView** Android app — for codebases not on Compose. |
 | [**`expense-tracker`**](samples/expense-tracker) | A real-world **multi-table** expense tracker: one-to-many (`@Relation`), many-to-many (junction table with composite PK), transactions, type-safe DSL queries, and reactive filtering. |
+| [**`pos`**](samples/pos) | A **Point of Sale** stress test exercising **every** Kiln operation: all 14 DSL operators, transactions, pagination, reactive observation, enums, nullable relations, composite keys, and raw `KilnDriver` for aggregate reports. |
 
 ```sh
 ./gradlew :compose-multiplatform:installDebug   # Compose, Android
 ./gradlew :compose-multiplatform:run            # Compose, Desktop (JVM)
 ./gradlew :android-views:installDebug           # Views, Android
 ./gradlew :expense-tracker:installDebug         # Multi-table, Android
+./gradlew :pos:installDebug                     # POS stress test, Android
 ./gradlew :compose-multiplatform:linkDebugFrameworkIosSimulatorArm64   # iOS (macOS only)
 ```
 
