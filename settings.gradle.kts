@@ -31,3 +31,6 @@ project(":compose-multiplatform").projectDir = file("samples/compose-multiplatfo
 
 include(":expense-tracker")
 project(":expense-tracker").projectDir = file("samples/expense-tracker")
+
+include(":pos")
+project(":pos").projectDir = file("samples/pos")
